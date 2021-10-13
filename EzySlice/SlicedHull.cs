@@ -25,11 +25,25 @@ namespace EzySlice {
             GameObject newObject = CreateUpperHull();
 
             if (newObject != null) {
-                newObject.transform.localPosition = original.transform.localPosition;
+                newObject.transform.localPosition = original.transform.parent.transform.localPosition;
                 newObject.transform.localRotation = original.transform.localRotation;
                 newObject.transform.localScale = original.transform.localScale;
+                //Debug.Log("Current upper x:" + newObject.transform.localPosition.x + " y: " + newObject.transform.localPosition.y + " z: " + newObject.transform.localPosition.z);
 
-                Material[] shared = original.GetComponent<MeshRenderer>().sharedMaterials;
+
+                Material[] shared;
+                MeshRenderer renderer = original.GetComponent<MeshRenderer>();
+                if(renderer != null)
+                {
+                    shared = renderer.sharedMaterials;
+                }
+                else
+                {
+                    shared = original.GetComponent<SkinnedMeshRenderer>().sharedMaterials;
+                }
+
+                
+
                 Mesh mesh = original.GetComponent<MeshFilter>().sharedMesh;
 
                 // nothing changed in the hierarchy, the cross section must have been batched
@@ -64,11 +78,24 @@ namespace EzySlice {
             GameObject newObject = CreateLowerHull();
 
             if (newObject != null) {
-                newObject.transform.localPosition = original.transform.localPosition;
+                newObject.transform.localPosition = original.transform.parent.transform.localPosition;
                 newObject.transform.localRotation = original.transform.localRotation;
                 newObject.transform.localScale = original.transform.localScale;
+                //Debug.Log("Current lower pos x:" + newObject.transform.localPosition.x + " y: " + newObject.transform.localPosition.y + " z: " + newObject.transform.localPosition.z);
 
-                Material[] shared = original.GetComponent<MeshRenderer>().sharedMaterials;
+                Material[] shared;
+                MeshRenderer renderer = original.GetComponent<MeshRenderer>();
+                if (renderer != null)
+                {
+                    shared = renderer.sharedMaterials;
+                }
+                else
+                {
+                    shared = original.GetComponent<SkinnedMeshRenderer>().sharedMaterials;
+                }
+
+
+
                 Mesh mesh = original.GetComponent<MeshFilter>().sharedMesh;
 
                 // nothing changed in the hierarchy, the cross section must have been batched

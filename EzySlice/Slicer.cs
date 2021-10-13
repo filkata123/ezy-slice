@@ -75,16 +75,28 @@ namespace EzySlice {
                 return null;
             }
 
+            Material[] materials;
+
             MeshRenderer renderer = obj.GetComponent<MeshRenderer>();
 
             // cannot continue without a proper renderer
-            if (renderer == null) {
-                Debug.LogWarning("EzySlice::Slice -> Provided GameObject must have a MeshRenderer Component.");
+            if (renderer != null) {
+                materials = renderer.sharedMaterials;
+            }
+            else
+            {
+                SkinnedMeshRenderer skinnedRendered = obj.GetComponent<SkinnedMeshRenderer>();
+                
+                if(skinnedRendered == null)
+                {
+                    Debug.LogWarning("EzySlice::Slice -> Provided GameObject must have a MeshRenderer Component.");
 
-                return null;
+                    return null;
+                }
+
+                materials = skinnedRendered.sharedMaterials;
             }
 
-            Material[] materials = renderer.sharedMaterials;
 
             Mesh mesh = filter.sharedMesh;
 
