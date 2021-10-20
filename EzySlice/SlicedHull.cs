@@ -25,8 +25,8 @@ namespace EzySlice {
             GameObject newObject = CreateUpperHull();
 
             if (newObject != null) {
-                newObject.transform.position = original.transform.TransformPoint(original.transform.localPosition);
-                newObject.transform.localRotation = original.transform.localRotation;
+                newObject.transform.position = original.transform.position;
+                newObject.transform.localRotation = original.transform.rotation;
                 newObject.transform.localScale = original.transform.localScale;
 
 
@@ -77,8 +77,8 @@ namespace EzySlice {
             GameObject newObject = CreateLowerHull();
 
             if (newObject != null) {
-                newObject.transform.position = original.transform.TransformPoint(original.transform.localPosition);
-                newObject.transform.localRotation = original.transform.localRotation;
+                newObject.transform.position = original.transform.position;
+                newObject.transform.localRotation = original.transform.rotation;
                 newObject.transform.localScale = original.transform.localScale;
                 //Debug.Log("Current lower pos x:" + newObject.transform.localPosition.x + " y: " + newObject.transform.localPosition.y + " z: " + newObject.transform.localPosition.z);
 
