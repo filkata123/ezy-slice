@@ -414,103 +414,103 @@ namespace EzySlice {
             }
 
             // generate the cross section required for this particular hull
-            //if (crossSection != null && crossCount > 0)
-            //{
-            //    int[] crossIndices = new int[crossCount * 3];
+            if (crossSection != null && crossCount > 0)
+            {
+                int[] crossIndices = new int[crossCount * 3];
 
-            //    for (int i = 0, triIndex = 0; i < crossCount; i++, triIndex += 3)
-            //    {
-            //        Triangle newTri = crossSection[i];
+                for (int i = 0, triIndex = 0; i < crossCount; i++, triIndex += 3)
+                {
+                    Triangle newTri = crossSection[i];
 
-            //        int i0 = vIndex + 0;
-            //        int i1 = vIndex + 1;
-            //        int i2 = vIndex + 2;
+                    int i0 = vIndex + 0;
+                    int i1 = vIndex + 1;
+                    int i2 = vIndex + 2;
 
-            //        // add the vertices
-            //        newVertices[i0] = newTri.positionA;
-            //        newVertices[i1] = newTri.positionB;
-            //        newVertices[i2] = newTri.positionC;
+                    // add the vertices
+                    newVertices[i0] = newTri.positionA;
+                    newVertices[i1] = newTri.positionB;
+                    newVertices[i2] = newTri.positionC;
 
-            //        // add the UV coordinates if any
-            //        if (hasUV)
-            //        {
-            //            newUvs[i0] = newTri.uvA;
-            //            newUvs[i1] = newTri.uvB;
-            //            newUvs[i2] = newTri.uvC;
-            //        }
+                    // add the UV coordinates if any
+                    if (hasUV)
+                    {
+                        newUvs[i0] = newTri.uvA;
+                        newUvs[i1] = newTri.uvB;
+                        newUvs[i2] = newTri.uvC;
+                    }
 
-            //        // add the Normals if any
-            //        if (hasNormal)
-            //        {
-            //            // invert the normals dependiong on upper or lower hull
-            //            if (isUpper)
-            //            {
-            //                newNormals[i0] = -newTri.normalA;
-            //                newNormals[i1] = -newTri.normalB;
-            //                newNormals[i2] = -newTri.normalC;
-            //            }
-            //            else
-            //            {
-            //                newNormals[i0] = newTri.normalA;
-            //                newNormals[i1] = newTri.normalB;
-            //                newNormals[i2] = newTri.normalC;
-            //            }
-            //        }
+                    // add the Normals if any
+                    if (hasNormal)
+                    {
+                        // invert the normals dependiong on upper or lower hull
+                        if (isUpper)
+                        {
+                            newNormals[i0] = -newTri.normalA;
+                            newNormals[i1] = -newTri.normalB;
+                            newNormals[i2] = -newTri.normalC;
+                        }
+                        else
+                        {
+                            newNormals[i0] = newTri.normalA;
+                            newNormals[i1] = newTri.normalB;
+                            newNormals[i2] = newTri.normalC;
+                        }
+                    }
 
-            //        // add the Tangents if any
-            //        if (hasTangent)
-            //        {
-            //            newTangents[i0] = newTri.tangentA;
-            //            newTangents[i1] = newTri.tangentB;
-            //            newTangents[i2] = newTri.tangentC;
-            //        }
+                    // add the Tangents if any
+                    if (hasTangent)
+                    {
+                        newTangents[i0] = newTri.tangentA;
+                        newTangents[i1] = newTri.tangentB;
+                        newTangents[i2] = newTri.tangentC;
+                    }
 
-            //        // add the Tangents if any
-            //        if (hasWeights)
-            //        {
-            //            newWeights[i0] = newTri.weightA;
-            //            newWeights[i1] = newTri.weightB;
-            //            newWeights[i2] = newTri.weightC;
-            //        }
+                    // add the Tangents if any
+                    if (hasWeights)
+                    {
+                        newWeights[i0] = newTri.weightA;
+                        newWeights[i1] = newTri.weightB;
+                        newWeights[i2] = newTri.weightC;
+                    }
 
-            //        // add triangles in clockwise for upper
-            //        // and reversed for lower hulls, to ensure the mesh
-            //        // is facing the right direction
-            //        if (isUpper)
-            //        {
-            //            crossIndices[triIndex] = i0;
-            //            crossIndices[triIndex + 1] = i1;
-            //            crossIndices[triIndex + 2] = i2;
-            //        }
-            //        else
-            //        {
-            //            crossIndices[triIndex] = i0;
-            //            crossIndices[triIndex + 1] = i2;
-            //            crossIndices[triIndex + 2] = i1;
-            //        }
+                    // add triangles in clockwise for upper
+                    // and reversed for lower hulls, to ensure the mesh
+                    // is facing the right direction
+                    if (isUpper)
+                    {
+                        crossIndices[triIndex] = i0;
+                        crossIndices[triIndex + 1] = i1;
+                        crossIndices[triIndex + 2] = i2;
+                    }
+                    else
+                    {
+                        crossIndices[triIndex] = i0;
+                        crossIndices[triIndex + 1] = i2;
+                        crossIndices[triIndex + 2] = i1;
+                    }
 
-            //        vIndex += 3;
-            //    }
+                    vIndex += 3;
+                }
 
 
-            //    // add triangles to the index for later generation
-            //    if (triangles.Count <= crossIndex)
-            //    {
-            //        triangles.Add(crossIndices);
-            //    }
-            //    else
-            //    {
-            //        // otherwise, we need to merge the triangles for the provided subsection
-            //        int[] prevTriangles = triangles[crossIndex];
-            //        int[] merged = new int[prevTriangles.Length + crossIndices.Length];
+                // add triangles to the index for later generation
+                if (triangles.Count <= crossIndex)
+                {
+                    triangles.Add(crossIndices);
+                }
+                else
+                {
+                    // otherwise, we need to merge the triangles for the provided subsection
+                    int[] prevTriangles = triangles[crossIndex];
+                    int[] merged = new int[prevTriangles.Length + crossIndices.Length];
 
-            //        System.Array.Copy(prevTriangles, merged, prevTriangles.Length);
-            //        System.Array.Copy(crossIndices, 0, merged, prevTriangles.Length, crossIndices.Length);
+                    System.Array.Copy(prevTriangles, merged, prevTriangles.Length);
+                    System.Array.Copy(crossIndices, 0, merged, prevTriangles.Length, crossIndices.Length);
 
-            //        // replace the previous array with the new merged array
-            //        triangles[crossIndex] = merged;
-            //    }
-            //}
+                    // replace the previous array with the new merged array
+                    triangles[crossIndex] = merged;
+                }
+            }
 
 
             int totalTriangles = triangles.Count;
