@@ -80,7 +80,6 @@ namespace EzySlice {
                 newObject.transform.position = original.transform.position;
                 newObject.transform.localRotation = original.transform.rotation;
                 newObject.transform.localScale = original.transform.localScale;
-                //Debug.Log("Current lower pos x:" + newObject.transform.localPosition.x + " y: " + newObject.transform.localPosition.y + " z: " + newObject.transform.localPosition.z);
 
                 Material[] shared;
                 MeshRenderer renderer = original.GetComponent<MeshRenderer>();

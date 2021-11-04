@@ -21,6 +21,13 @@ namespace EzySlice {
         private Vector2 m_uv_b;
         private Vector2 m_uv_c;
 
+        // the BoneWeight of this triangle
+        // these are optional and may not be set
+        private bool m_weights_set;
+        private BoneWeight m_weight_a;
+        private BoneWeight m_weight_b;
+        private BoneWeight m_weight_c;
+
         // the Normals of the Vertices
         // these are optional and may not be set
         private bool m_nor_set;
@@ -47,6 +54,11 @@ namespace EzySlice {
             this.m_uv_b = Vector2.zero;
             this.m_uv_c = Vector2.zero;
 
+            this.m_weights_set = false;
+            this.m_weight_a = new BoneWeight();
+            this.m_weight_b = new BoneWeight();
+            this.m_weight_c = new BoneWeight();
+
             this.m_nor_set = false;
             this.m_nor_a = Vector3.zero;
             this.m_nor_b = Vector3.zero;
@@ -68,6 +80,35 @@ namespace EzySlice {
 
         public Vector3 positionC {
             get { return this.m_pos_c; }
+        }
+
+        public bool hasWeights
+        {
+            get { return this.m_uv_set; }
+        }
+
+        public void SetWeights(BoneWeight weightA, BoneWeight weightB, BoneWeight weightC)
+        {
+            this.m_weight_a = weightA;
+            this.m_weight_b = weightB;
+            this.m_weight_c = weightC;
+
+            this.m_weights_set = true;
+        }
+
+        public BoneWeight weightA
+        {
+            get { return this.m_weight_a; }
+        }
+
+        public BoneWeight weightB
+        {
+            get { return this.m_weight_b; }
+        }
+
+        public BoneWeight weightC
+        {
+            get { return this.m_weight_c; }
         }
 
         public bool hasUV {

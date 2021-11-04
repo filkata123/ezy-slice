@@ -50,6 +50,19 @@ namespace EzySlice {
             }
 
             /**
+            * Check if the submesh has had any Weights added.
+            * NOTE -> This should be supported properly
+            */
+            public bool hasWeights
+            {
+                get
+                {
+                    // what is this abomination??
+                    return upperHull.Count > 0 ? upperHull[0].hasWeights : lowerHull.Count > 0 ? lowerHull[0].hasWeights : false;
+                }
+            }
+
+            /**
              * Check if proper slicing has occured for this submesh. Slice occured if there
              * are triangles in both the upper and lower hulls
              */
@@ -153,6 +166,7 @@ namespace EzySlice {
             Vector2[] uv = sharedMesh.uv;
             Vector3[] norm = sharedMesh.normals;
             Vector4[] tan = sharedMesh.tangents;
+            BoneWeight[] weights = sharedMesh.boneWeights;
 
             int submeshCount = sharedMesh.subMeshCount;
 
@@ -168,6 +182,7 @@ namespace EzySlice {
             bool genUV = verts.Length == uv.Length;
             bool genNorm = verts.Length == norm.Length;
             bool genTan = verts.Length == tan.Length;
+            bool genWeights = verts.Length == weights.Length;
 
             // iterate over all the submeshes individually. vertices and indices
             // are all shared within the submesh
@@ -199,6 +214,12 @@ namespace EzySlice {
                     // generate tangents if available
                     if (genTan) {
                         newTri.SetTangent(tan[i0], tan[i1], tan[i2]);
+                    }
+
+                    // generate weights if available
+                    if (genWeights)
+                    {
+                        newTri.SetWeights(weights[i0], weights[i1], weights[i2]);
                     }
 
                     // slice this particular triangle with the provided
@@ -315,12 +336,14 @@ namespace EzySlice {
             bool hasUV = meshes[0].hasUV;
             bool hasNormal = meshes[0].hasNormal;
             bool hasTangent = meshes[0].hasTangent;
+            bool hasWeights = meshes[0].hasWeights;
 
             // vertices and uv's are common for all submeshes
             Vector3[] newVertices = new Vector3[arrayLen];
             Vector2[] newUvs = hasUV ? new Vector2[arrayLen] : null;
             Vector3[] newNormals = hasNormal ? new Vector3[arrayLen] : null;
             Vector4[] newTangents = hasTangent ? new Vector4[arrayLen] : null;
+            BoneWeight[] newWeights = hasWeights ? new BoneWeight[arrayLen] : null;
 
             // each index refers to our submesh triangles
             List<int[]> triangles = new List<int[]>(submeshCount);
@@ -367,6 +390,14 @@ namespace EzySlice {
                         newTangents[i0] = newTri.tangentA;
                         newTangents[i1] = newTri.tangentB;
                         newTangents[i2] = newTri.tangentC;
+                    }
+
+                    // add the Tangents if any
+                    if (hasWeights)
+                    {
+                        newWeights[i0] = newTri.weightA;
+                        newWeights[i1] = newTri.weightB;
+                        newWeights[i2] = newTri.weightC;
                     }
 
                     // triangles are returned in clocwise order from the
@@ -434,6 +465,14 @@ namespace EzySlice {
             //            newTangents[i2] = newTri.tangentC;
             //        }
 
+            //        // add the Tangents if any
+            //        if (hasWeights)
+            //        {
+            //            newWeights[i0] = newTri.weightA;
+            //            newWeights[i1] = newTri.weightB;
+            //            newWeights[i2] = newTri.weightC;
+            //        }
+
             //        // add triangles in clockwise for upper
             //        // and reversed for lower hulls, to ensure the mesh
             //        // is facing the right direction
@@ -490,6 +529,11 @@ namespace EzySlice {
 
             if (hasTangent) {
                 newMesh.tangents = newTangents;
+            }
+
+            if (hasWeights)
+            {
+                newMesh.boneWeights = newWeights;
             }
 
             // add the submeshes
