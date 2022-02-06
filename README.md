@@ -1,3 +1,6 @@
+<b> UPDATE: In this ezy-slice fork I updated the functionality to include cutting of animated avatars with skinned mesh renderers, by adding bone-weight tracking and checkcking the type of rendered attached to the cut object. </b>
+* * * 
+
 <h3 align="center">
   <img src="Graphics/icon.png?raw=true" alt="EzySlice Logo" width="600">
 </h3>
